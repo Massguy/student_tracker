@@ -2,6 +2,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import StudentCard from './StudentCard';
+import StudentForm from '../Form';
+
 
 export default class StudentList extends Component {
   state = {
@@ -16,7 +18,8 @@ export default class StudentList extends Component {
     const { students } = this.state
     return (
       <div>
-        <ul>{students.map(student => <StudentCard student={student} />)}
+        <StudentForm />
+        <ul>{students.map(student => <li key={student._id}><StudentCard student={student} /></li>)}
         </ul>
       </div>
     )

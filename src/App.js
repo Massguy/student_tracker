@@ -4,6 +4,7 @@ import Header from './Components/Header';
 import Nav from './Components/Nav';
 import StudentList from './Components/StudentList';
 import { Router } from "@reach/router"
+import Info from './Components/HomepageInfo';
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
       <Header />
       <Nav />
       <Router>
-        <StudentList path='/' />
+        <Info path='/' />
+        <StudentList path='/students' />
       </Router>
     </>
   );
