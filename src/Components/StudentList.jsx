@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import StudentCard from './StudentCard';
-import StudentForm from '../Form';
+import AddStudent from './AddStudent';
 
 
 export default class StudentList extends Component {
@@ -18,7 +18,7 @@ export default class StudentList extends Component {
     const { students } = this.state
     return (
       <div>
-        <StudentForm />
+        <AddStudent />
         <ul>{students.map(student => <li key={student._id}><StudentCard student={student} /></li>)}
         </ul>
       </div>
