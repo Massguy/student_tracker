@@ -1,28 +1,38 @@
-
-import React, { Component } from 'react'
-import axios from 'axios'
-import StudentCard from './StudentCard';
-import AddStudent from './AddStudent';
-
+import React, { Component } from "react";
+import * as api from "../api";
+import StudentCard from "./StudentCard";
+import AddStudent from "./AddStudent";
 
 export default class StudentList extends Component {
   state = {
     students: []
-  }
+  };
+  postedStudent = newStudent => {
+    // take current state add new student and setState in StudentList
+    this.setState(currentState => {
+      const newState = [...currentState.students, newStudent];
+      return { students: newState };
+    });
+  };
+
   componentDidMount() {
-    axios.get(`https://nc-student-tracker.herokuapp.com/api/students`).then(({ data }) => {
-      this.setState(data)
-    })
+    api.getAllStudents().then(({ data }) => {
+      this.setState(data);
+    });
   }
   render() {
-    const { students } = this.state
+    const { students } = this.state;
     return (
       <div>
-        <AddStudent />
-        <ul>{students.map(student => <li key={student._id}><StudentCard student={student} /></li>)}
-        </ul>
+        <AddStudent postedStudent={this.postedStudent} />
+        <div>
+          {students.map(student => (
+            <div key={student._id}>
+              <StudentCard student={student} />
+            </div>
+          ))}
+        </div>
       </div>
-    )
+    );
   }
 }
-

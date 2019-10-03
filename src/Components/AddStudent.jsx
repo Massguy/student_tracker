@@ -1,45 +1,73 @@
-import React from 'react';
-import axios from 'axios'
-
+import React from "react";
+import * as api from "../api";
 
 class AddStudent extends React.Component {
   state = {
-    name: '',
-    cohort: 0
-  }
-  handleNameChange = event => {
-    this.setState({ name: event.target.value })
-  }
+    name: "",
+    startingCohort: ""
+  };
 
-  handleCohortChange = event => {
-    this.setState({ cohort: event.target.value })
-  }
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
 
   handleSubmit = event => {
-    event.preventDefault()
+    const { postedStudent } = this.props;
+    event.preventDefault();
     const user = {
       name: this.state.name,
-      cohort: this.state.cohort
-    }
-    axios.post(`https://nc-student-tracker.herokuapp.com/api/students`, { user })
-      .then(res => {
-        console.log(res)
+      startingCohort: this.state.startingCohort
+    };
+    api
+      .studentAdder(user)
+      .then(({ data: { student: addedStudent } }) => {
+        const newStudent = {
+          _id: addedStudent["_id"],
+          name: addedStudent["name"],
+          startingCohort: addedStudent["startingCohort"],
+          currentBlock: addedStudent["currentBlock"]
+        };
+
+        postedStudent(newStudent);
       })
-  }
+      .catch();
+    this.setState(() => {
+      const newState = {
+        name: "",
+        startingCohort: ""
+      };
+      return newState;
+    });
+  };
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label id='form-name'>Name
-        <input type='text' name='name' id='form-name' onChange={this.handleNameChange}></input>
+        <label id="form-name">
+          Name
+          <input
+            type="text"
+            name="name"
+            id="form-name"
+            onChange={this.handleChange}
+            value={this.state.name}
+          ></input>
         </label>
-        <label id='starting-cohort'> Starting Cohort
-        <input type='number' name='starting-cohort' onChange={this.handleCohortChange}></input>
+        <label id="starting-cohort">
+          {" "}
+          Starting Cohort
+          <input
+            type="number"
+            name="startingCohort"
+            onChange={this.handleChange}
+            value={this.state.startingCohort}
+          ></input>
         </label>
         <button type="submit">Add Student</button>
       </form>
-    )
+    );
   }
 }
 
-export default AddStudent
+export default AddStudent;
