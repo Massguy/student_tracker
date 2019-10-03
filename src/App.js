@@ -13,7 +13,7 @@ function App() {
       <Nav />
       <Router>
         <Info path='/' />
-        <StudentList path='/students' />
+        <StudentList path='/students/*' />
       </Router>
     </>
   );

@@ -10,3 +10,9 @@ export const studentAdder = student => {
 export const getAllStudents = () => {
   return axios.get(`https://nc-student-tracker.herokuapp.com/api/students`);
 };
+
+export const getSingleStudent = (id) => {
+  return axios.get(`https://nc-student-tracker.herokuapp.com/api/students/${id}`).then((response) => {
+    return response.data.student
+  });
+};

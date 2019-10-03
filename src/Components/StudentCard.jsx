@@ -13,8 +13,10 @@ function StudentCard(props) {
   return (
     <div className="column">
       <div className="card">
-        <p>{student.name}</p>
-        <p>{blockRef[student.currentBlock]}</p>
+        <p>Name: {student.name}</p>
+        <p>CurrentBlock: {blockRef[student.currentBlock]}</p>
+        <p>id: {student._id}</p>
+        <p>starting cohort: {student.startingCohort}</p>
       </div>
     </div>
   );

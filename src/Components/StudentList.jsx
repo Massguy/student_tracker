@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import * as api from "../api";
 import StudentCard from "./StudentCard";
 import AddStudent from "./AddStudent";
+import SingleStudent from "./SIngleStudent";
+import { Router } from "@reach/router"
 
 export default class StudentList extends Component {
   state = {
@@ -24,7 +26,11 @@ export default class StudentList extends Component {
     const { students } = this.state;
     return (
       <div>
+        <Router>
+          <SingleStudent path='/:id' />
+        </Router>
         <AddStudent postedStudent={this.postedStudent} />
+
         <div>
           {students.map(student => (
             <div key={student._id}>
@@ -32,6 +38,7 @@ export default class StudentList extends Component {
             </div>
           ))}
         </div>
+
       </div>
     );
   }
