@@ -1,33 +1,49 @@
-import React, { Component } from 'react'
-import * as api from '../api'
+import React, { Component } from "react";
+import * as api from "../api";
+import ReturnBlockHistory from "./ReturnBlockHistory";
 
 class SingleStudent extends Component {
   state = {
     student: {},
     isLoading: true
-  }
-  getBlockHistory = (blockHistory) => {
+  };
+
+  getBlockHistory = blockHistory => {
     return blockHistory.reduce((acc, elem) => {
       acc[elem.name] = acc[elem.name] ? acc[elem.name] + 1 : 1;
-      return acc
+      return acc;
     }, {});
+  };
 
-
-  }
   componentDidMount() {
-    const { id } = this.props
-    api.getSingleStudent(id).then((student) => this.setState(() => {
-      return { student, isLoading: false }
-
-    }))
+    const { id } = this.props;
+    api.getSingleStudent(id).then(student =>
+      this.setState(() => {
+        return { student, isLoading: false };
+      })
+    );
   }
   render() {
-    const { student, isLoading } = this.state
+    const {
+      student,
+      isLoading,
+      student: { blockHistory }
+    } = this.state;
+    const blockInfo = blockHistory && this.getBlockHistory(blockHistory);
     return (
       <>
         <h2>{student.name}</h2>
-        <p>{student.startingCohort}</p>
-        <p>{isLoading ? 'Loading' : this.getBlockHistory(student.blockHistory)}</p>
+        <p>Starting Cohort: {student.startingCohort}</p>
+        <div>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <div>
+              <h3>Block History</h3>
+              <ReturnBlockHistory blockHistoryObj={blockInfo} />
+            </div>
+          )}
+        </div>
       </>
     );
   }
