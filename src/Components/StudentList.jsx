@@ -3,7 +3,7 @@ import * as api from "../api";
 import StudentCard from "./StudentCard";
 import AddStudent from "./AddStudent";
 import SingleStudent from "./SIngleStudent";
-import { Router } from "@reach/router"
+import { Router, Link } from "@reach/router";
 
 export default class StudentList extends Component {
   state = {
@@ -22,23 +22,25 @@ export default class StudentList extends Component {
       this.setState(data);
     });
   }
+
   render() {
     const { students } = this.state;
     return (
       <div>
         <Router>
-          <SingleStudent path='/:id' />
+          <SingleStudent path="/:id" />
         </Router>
         <AddStudent postedStudent={this.postedStudent} />
 
         <div>
           {students.map(student => (
             <div key={student._id}>
-              <StudentCard student={student} />
+              <Link to={`/students/${student._id}`}>
+                <StudentCard student={student} />
+              </Link>
             </div>
           ))}
         </div>
-
       </div>
     );
   }

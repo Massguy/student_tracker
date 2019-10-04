@@ -23,6 +23,15 @@ class SingleStudent extends Component {
       })
     );
   }
+  componentDidUpdate(prevProps) {
+    if (this.props.id !== prevProps.id) {
+      api.getSingleStudent(this.props.id).then(student =>
+        this.setState(() => {
+          return { student, isLoading: false };
+        })
+      );
+    }
+  }
   render() {
     const {
       student,
