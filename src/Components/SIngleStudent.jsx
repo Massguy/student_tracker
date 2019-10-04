@@ -7,17 +7,12 @@ class SingleStudent extends Component {
     isLoading: true
   }
   getBlockHistory = (blockHistory) => {
-    console.log(blockHistory)
-    return blockHistory.reduce((totalObj, curr) => {
-      console.log(totalObj)
-      if (totalObj[curr.name]) {
-        return totalObj[curr.name]++
-        // totalObj[name][curr['name']] 
-      }
-      else {
-        return totalObj[curr.name] = 1
-      }
-    }, {})
+    return blockHistory.reduce((acc, elem) => {
+      acc[elem.name] = acc[elem.name] ? acc[elem.name] + 1 : 1;
+      return acc
+    }, {});
+
+
   }
   componentDidMount() {
     const { id } = this.props
@@ -32,7 +27,7 @@ class SingleStudent extends Component {
       <>
         <h2>{student.name}</h2>
         <p>{student.startingCohort}</p>
-        <p>{isLoading ? 'Loading' : console.log(this.getBlockHistory(student.blockHistory))}</p>
+        <p>{isLoading ? 'Loading' : this.getBlockHistory(student.blockHistory)}</p>
       </>
     );
   }
