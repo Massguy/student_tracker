@@ -17,6 +17,13 @@ export default class StudentList extends Component {
     });
   };
 
+  deleteStudent = id => {
+    api.removeSingleStudent(id);
+    this.setState(currentState => {
+      return currentState.students.filter(student => student._id !== id);
+    });
+  };
+
   componentDidMount() {
     api.getAllStudents().then(({ data }) => {
       this.setState(data);
@@ -28,7 +35,7 @@ export default class StudentList extends Component {
     return (
       <div>
         <Router>
-          <SingleStudent path="/:id" />
+          <SingleStudent deleteStudent={this.deleteStudent} path="/:id" />
         </Router>
         <AddStudent postedStudent={this.postedStudent} />
 

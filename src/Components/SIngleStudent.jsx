@@ -8,6 +8,11 @@ class SingleStudent extends Component {
     isLoading: true
   };
 
+  initiateDelete = id => {
+    const { deleteStudent } = this.props;
+    deleteStudent(id);
+  };
+
   getBlockHistory = blockHistory => {
     return blockHistory.reduce((acc, elem) => {
       acc[elem.name] = acc[elem.name] ? acc[elem.name] + 1 : 1;
@@ -32,12 +37,14 @@ class SingleStudent extends Component {
       );
     }
   }
+
   render() {
     const {
       student,
       isLoading,
       student: { blockHistory }
     } = this.state;
+
     const blockInfo = blockHistory && this.getBlockHistory(blockHistory);
     return (
       <>
@@ -52,6 +59,13 @@ class SingleStudent extends Component {
               <ReturnBlockHistory blockHistoryObj={blockInfo} />
             </div>
           )}
+          <button
+            onClick={() => {
+              this.initiateDelete(student._id);
+            }}
+          >
+            Delete Student
+          </button>
         </div>
       </>
     );
