@@ -20,9 +20,10 @@ export const getSingleStudent = id => {
 };
 
 export const removeSingleStudent = id => {
+  console.log(id, "<---- id");
   return axios
-    .delete(`https://nc-student-tracker.herokuapp.com/api/students/${id}`)
+    .delete(`https://nc-student-tracker.herokuapp.com/api/students/${id}`, id)
     .then(response => {
-      return response.data.student;
+      console.log(response);
     });
 };

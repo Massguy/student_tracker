@@ -3,7 +3,7 @@ import * as api from "../api";
 import StudentCard from "./StudentCard";
 import AddStudent from "./AddStudent";
 import SingleStudent from "./SIngleStudent";
-import { Router, Link } from "@reach/router";
+import { Router, Link, navigate } from "@reach/router";
 
 export default class StudentList extends Component {
   state = {
@@ -18,9 +18,15 @@ export default class StudentList extends Component {
   };
 
   deleteStudent = id => {
-    api.removeSingleStudent(id);
+    api.removeSingleStudent(id).then(() => {
+      navigate("/students");
+    });
     this.setState(currentState => {
-      return currentState.students.filter(student => student._id !== id);
+      const filteredState = currentState.students.filter(
+        student => student._id !== id
+      );
+
+      return { students: filteredState };
     });
   };
 
